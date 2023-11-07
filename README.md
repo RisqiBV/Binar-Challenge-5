@@ -1,24 +1,24 @@
-# Binar-Challenge-Chapter-4-Risqi
+# Binar-Challenge-Chapter-45-Risqi
 
-## Challenge Chapter 4 by Risqi
+## Challenge Chapter 5 by Risqi
 
 ### Skill Metrics
 
-1. Node.JS
-2. Package Management
-3. Express.JS
-4. ORM with Prisma
+1. API Documentation
+2. Testing
+3. Authentication
+4. Authorization
+5. Security
 
 ### Delivery
 
-1. Inisialisasi proyek Express.js dengan menggunakan perintah npm init -y
-2. Instal Express.js dan Prisma.js dengan menjalankan perintah npm install express prisma
-3. Implementasikan server Express.js dengan beberapa endpoint yang memanfaatkan Prisma.js untuk berinteraksi dengan basis data PostgreSQL yang telah Anda buat pada Challenge 3
-4. Contoh endpoint: /accounts untuk mengambil daftar akun, /deposit untuk melakukan deposit, /withdraw untuk melakukan penarikan, dan lainnya
-5. Buatlah pull request dari branch feature ke branch main di repositori GitHub
+1. Dokumentasi untuk setiap endpoint yang tersedia dari challenge chapter 4
+2. Integration testing untuk setiap endpoint yang tersedia
+3. Autentikasi dengan menggunakan JWT-Strategy
+4. Endpoint/auth/authenticate untuk memeriksa apakah autentikasi berhasil atau tidak
 
 ### Criteria
 
-1. Mampu membuat API menggunakan Express JS (40)
-2. Mempu melakukan CRUD kedalam database menggunakan Prisma (40)
-3. Mampu menggunakan JSON (20)
+1. Membuat dokumentasi api menggunakan swagger (30 points)
+2. Mengimplementasikan TDD (30 points)
+3. Mengimplementasikan Autentikasi (40 points)
