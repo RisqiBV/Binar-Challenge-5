@@ -3,10 +3,103 @@
 const express = require('express');
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
+const express = require('express');
+const jwt = require('jsonwebtoken');
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
+const JwtStrategy = require('passport-jwt').Strategy;
+const ExtractJwt = require('passport-jwt').ExtractJwt;
 
 const app = express();
 
 app.use(express.json());
+
+const users = [
+  {
+    id: 1,
+    username: 'user1',
+    password: 'password1',
+  },
+  {
+    id: 2,
+    username: 'user2',
+    password: 'password2',
+  },
+];
+
+  const secretKey = 'your-secret-key'; // Ganti dengan kunci rahasia yang kuat
+  const jwtOptions = {
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+    secretOrKey: secretKey,
+  };
+
+  passport.use(new JwtStrategy(jwtOptions, (payload, done) => {
+    if (payload.username === 'exampleUser') {
+      return done(null, { username: 'exampleUser' });
+    } else {
+      return done(null, false);
+    }
+  }));
+
+  app.post('/auth/register', (req, res) => {
+    const user = {
+      username: req.body.username,
+      password: req.body.password,
+    };
+    res.json({ message: 'Registration successful', user });
+  });
+
+  app.post('/auth/login', (req, res) => {
+    if (req.body.username === 'exampleUser' && req.body.password === 'examplePassword') {
+      const payload = { username: req.body.username };
+      const token = jwt.sign(payload, secretKey);
+      res.json({ message: 'Login successful', token });
+    } else {
+      res.status(401).json({ message: 'Login failed' });
+    }
+  });
+
+  const requireAuth = passport.authenticate('jwt', { session: false });
+
+  app.get('/protected', requireAuth, (req, res) => {
+    res.json({ message: 'You are authorized to access this route.' });
+  });
+
+  app.post('/auth/register', (req, res) => {
+    const { username, password } = req.body;
+  
+    const token = jwt.sign({ username }, secretKey);
+  
+    res.json({ token });
+  });
+  
+  app.post('/auth/login', (req, res) => {
+    const { username, password } = req.body;
+  
+    const user = users.find((u) => u.username === username && u.password === password);
+  
+    if (user) {
+      const token = jwt.sign({ username }, secretKey);
+      res.json({ token });
+    } else {
+      res.status(401).json({ error: 'Authentication failed' });
+    }
+  });
+  
+  app.get('/auth/authenticate', (req, res) => {
+    const token = req.header('Authorization');
+    if (!token) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+  
+    jwt.verify(token, secretKey, (err, decoded) => {
+      if (err) {
+        return res.status(401).json({ error: 'Authentication failed' });
+      }
+  
+      res.json({ user: decoded.username });
+    });
+  });
 
 // Endpoint untuk menambahkan user baru beserta profilnya (POST)
 app.post('/api/v1/users', async (req, res) => {
