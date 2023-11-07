@@ -7,13 +7,13 @@ describe('Integration Testing for User Endpoints', () => {
   describe('POST /api/v1/users', () => {
     it('should create a new user with a profile', async () => {
       const user = {
-        name: 'John Doe',
-        email: 'john@example.com',
+        name: 'Risqi',
+        email: 'risqi@mail.com',
         password: 'password123',
         profile: {
           identity_type: 'ID',
           identity_number: '1234567890',
-          address: '123 Main St',
+          address: 'Kasihan, Bantul',
         }
       };
 
@@ -76,9 +76,9 @@ describe('Integration Testing for User Endpoints', () => {
   describe('PUT /api/v1/users/:userId', () => {
     it('should update user details by ID', async () => {
       const updatedUserData = {
-        name: 'Updated Name',
-        email: 'updated@example.com',
-        password: 'updatedpassword',
+        name: 'Bagus Palevi',
+        email: 'bgs@mail.com',
+        password: 'u12345',
       };
 
       const response = await request(app)
@@ -93,9 +93,9 @@ describe('Integration Testing for User Endpoints', () => {
     it('should return an error if user ID is not found', async () => {
       const nonExistentUserId = 9999;
       const updatedUserData = {
-        name: 'Updated Name',
-        email: 'updated@example.com',
-        password: 'updatedpassword',
+        name: 'Bagus Palevi',
+        email: 'bgs@mail.com',
+        password: 'u12345',
       };
 
       const response = await request(app)

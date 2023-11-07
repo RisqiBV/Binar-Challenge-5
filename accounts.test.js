@@ -13,7 +13,7 @@ describe('Integration Testing for Bank Account Endpoints', () => {
       it('should create a new bank account for an existing user', async () => {
         const accountData = {
           user_id: existingUserId,
-          bank_name: 'Bank XYZ',
+          bank_name: 'Bank Binar',
           bank_account_number: '1234567890',
           balance: 1000,
         };
@@ -35,7 +35,7 @@ describe('Integration Testing for Bank Account Endpoints', () => {
         const nonExistentUserId = 9999;
         const accountData = {
           user_id: nonExistentUserId,
-          bank_name: 'Bank XYZ',
+          bank_name: 'Bank Binar',
           bank_account_number: '1234567890',
           balance: 1000,
         };
@@ -83,7 +83,7 @@ describe('Integration Testing for Bank Account Endpoints', () => {
     describe('PUT /api/v1/accounts/:accountId', () => {
       it('should update bank account details by ID', async () => {
         const updatedAccountData = {
-          bank_name: 'Updated Bank Name',
+          bank_name: 'Bank BNI',
           bank_account_number: '9876543210',
           balance: 2000,
         };
@@ -102,7 +102,7 @@ describe('Integration Testing for Bank Account Endpoints', () => {
       it('should return an error if bank account ID is not found', async () => {
         const nonExistentAccountId = 9999;
         const updatedAccountData = {
-          bank_name: 'Updated Bank Name',
+          bank_name: 'Bank BNI',
           bank_account_number: '9876543210',
           balance: 2000,
         };

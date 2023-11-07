@@ -13,7 +13,7 @@ describe('Integration Testing for User Profile Endpoints', () => {
           user_id: userId,
           identity_type: 'KTP',
           identity_number: '1234567890',
-          address: 'Jl. Contoh No. 123',
+          address: 'Kasihan Bantul Yogyakarta',
         };
   
         const response = await request(app)
@@ -35,7 +35,7 @@ describe('Integration Testing for User Profile Endpoints', () => {
           user_id: nonExistentUserId,
           identity_type: 'KTP',
           identity_number: '1234567890',
-          address: 'Jl. Contoh No. 123',
+          address: 'Kasihan Bantul Yogyakarta',
         };
   
         const response = await request(app)
@@ -100,7 +100,7 @@ describe('Integration Testing for User Profile Endpoints', () => {
         const updatedProfileData = {
           identity_type: 'SIM',
           identity_number: '9876543210',
-          address: 'Jl. Baru No. 456',
+          address: 'Bantul Yogyakarta',
         };
   
         const response = await request(app)
