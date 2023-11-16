@@ -1,0 +1,456 @@
+/**
+ * @swagger
+ * components:
+ *   securitySchemes:
+ *     bearerAuth:
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT
+ * 
+ *   schemas:
+ *     User:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           format: int64
+ *         name:
+ *           type: string
+ *         email:
+ *           type: string
+ *         password:
+ *           type: string
+ * 
+ *     UserProfile:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           format: int64
+ *         user_id:
+ *           type: integer
+ *           format: int64
+ *         identity_type:
+ *           type: string
+ *         identity_number:
+ *           type: string
+ *         address:
+ *           type: string
+ * 
+ *     BankAccount:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           format: int64
+ *         user_id:
+ *           type: integer
+ *           format: int64
+ *         bank_name:
+ *           type: string
+ *         bank_account_number:
+ *           type: string
+ *         balance:
+ *           type: number
+ * 
+ *     Transaction:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: integer
+ *           format: int64
+ *         source_account_id:
+ *           type: integer
+ *           format: int64
+ *         destination_account_id:
+ *           type: integer
+ *           format: int64
+ *         amount:
+ *           type: number
+ * 
+ * /api/v1/users:
+ *   post:
+ *     summary: Create a new user
+ *     tags:
+ *       - User
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       '200':
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ * 
+ *   get:
+ *     summary: Get a list of users
+ *     tags:
+ *       - User
+ *     responses:
+ *       '200':
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ * 
+ * /api/v1/users/{userId}:
+ *   get:
+ *     summary: Get user details by ID
+ *     tags:
+ *       - User
+ *     parameters:
+ *       - name: userId
+ *         in: path
+ *         required: true
+ *         description: ID of the user to get
+ *         schema:
+ *           type: integer
+ *           format: int64
+ *     responses:
+ *       '200':
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ * 
+ *   put:
+ *     summary: Update user details by ID
+ *     tags:
+ *       - User
+ *     parameters:
+ *       - name: userId
+ *         in: path
+ *         required: true
+ *         description: ID of the user to update
+ *         schema:
+ *           type: integer
+ *           format: int64
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/User'
+ *     responses:
+ *       '200':
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ * 
+ *   delete:
+ *     summary: Delete user by ID
+ *     tags:
+ *       - User
+ *     parameters:
+ *       - name: userId
+ *         in: path
+ *         required: true
+ *         description: ID of the user to delete
+ *         schema:
+ *           type: integer
+ *           format: int64
+ *     responses:
+ *       '200':
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ * 
+ * /api/v1/accounts:
+ *   post:
+ *     summary: Create a new bank account
+ *     tags:
+ *       - Bank Account
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/BankAccount'
+ *     responses:
+ *       '200':
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/BankAccount'
+ * 
+ *   get:
+ *     summary: Get a list of bank accounts
+ *     tags:
+ *       - Bank Account
+ *     responses:
+ *       '200':
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/BankAccount'
+ * 
+ * /api/v1/accounts/{accountId}:
+ *   get:
+ *     summary: Get bank account details by ID
+ *     tags:
+ *       - Bank Account
+ *     parameters:
+ *       - name: accountId
+ *         in: path
+ *         required: true
+ *         description: ID of the bank account to get
+ *         schema:
+ *           type: integer
+ *           format: int64
+ *     responses:
+ *       '200':
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/BankAccount'
+ * 
+ *   put:
+ *     summary: Update bank account details by ID
+ *     tags:
+ *       - Bank Account
+ *     parameters:
+ *       - name: accountId
+ *         in: path
+ *         required: true
+ *         description: ID of the bank account to update
+ *         schema:
+ *           type: integer
+ *           format: int64
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/BankAccount'
+ *     responses:
+ *       '200':
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/BankAccount'
+ * 
+ *   delete:
+ *     summary: Delete bank account by ID
+ *     tags:
+ *       - Bank Account
+ *     parameters:
+ *       - name: accountId
+ *         in: path
+ *         required: true
+ *         description: ID of the bank account to delete
+ *         schema:
+ *           type: integer
+ *           format: int64
+ *     responses:
+ *       '200':
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ * 
+ * /api/v1/transactions:
+ *   post:
+ *     summary: Make a new transaction
+ *     tags:
+ *       - Transaction
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/Transaction'
+ *     responses:
+ *       '200':
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Transaction'
+ * 
+ *   get:
+ *     summary: Get a list of transactions
+ *     tags:
+ *       - Transaction
+ *     responses:
+ *       '200':
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Transaction'
+ * 
+ * /api/v1/transactions/{transactionId}:
+ *   get:
+ *     summary: Get transaction details by ID
+ *     tags:
+ *       - Transaction
+ *     parameters:
+ *       - name: transactionId
+ *         in: path
+ *         required: true
+ *         description: ID of the transaction to get
+ *         schema:
+ *           type: integer
+ *           format: int64
+ *     responses:
+ *       '200':
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Transaction'
+ * 
+ *   delete:
+ *     summary: Delete transaction by ID
+ *     tags:
+ *       - Transaction
+ *     parameters:
+ *       - name: transactionId
+ *         in: path
+ *         required: true
+ *         description: ID of the transaction to delete
+ *         schema:
+ *           type: integer
+ *           format: int64
+ *     responses:
+ *       '200':
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ * 
+ * /api/v1/profile:
+ *   post:
+ *     summary: Create a new user profile
+ *     tags:
+ *       - Profile
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UserProfile'
+ *     responses:
+ *       '200':
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UserProfile'
+ * 
+ *   get:
+ *     summary: Get a list of user profiles
+ *     tags:
+ *       - Profile
+ *     responses:
+ *       '200':
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/UserProfile'
+ * 
+ * /api/v1/profile/{profileId}:
+ *   get:
+ *     summary: Get user profile details by ID
+ *     tags:
+ *       - Profile
+ *     parameters:
+ *       - name: profileId
+ *         in: path
+ *         required: true
+ *         description: ID of the user profile to get
+ *         schema:
+ *           type: integer
+ *           format: int64
+ *     responses:
+ *       '200':
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UserProfile'
+ * 
+ *   put:
+ *     summary: Update user profile details by ID
+ *     tags:
+ *       - Profile
+ *     parameters:
+ *       - name: profileId
+ *         in: path
+ *         required: true
+ *         description: ID of the user profile to update
+ *         schema:
+ *           type: integer
+ *           format: int64
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UserProfile'
+ *     responses:
+ *       '200':
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UserProfile'
+ * 
+ *   delete:
+ *     summary: Delete user profile by ID
+ *     tags:
+ *       - Profile
+ *     parameters:
+ *       - name: profileId
+ *         in: path
+ *         required: true
+ *         description: ID of the user profile to delete
+ *         schema:
+ *           type: integer
+ *           format: int64
+ *     responses:
+ *       '200':
+ *         description: Successful operation
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ */
